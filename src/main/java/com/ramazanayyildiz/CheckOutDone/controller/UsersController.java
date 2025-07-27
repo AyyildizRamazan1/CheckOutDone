@@ -18,13 +18,13 @@ public class UsersController {
     private UsersService usersService;
 
     @GetMapping()
-    public ResponseEntity<List<Users>> getAllUsers() {
-        List<Users> usersList = usersService.getAllUsers();
+    public ResponseEntity<List<UsersDto>> getAllUsers() {
+        List<UsersDto> usersList = usersService.getAllUsers();
         return ResponseEntity.ok(usersList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable("id") Integer id) {
+    public ResponseEntity<UsersDto> getUserById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(usersService.findUser(id));
     }
 
@@ -38,6 +38,11 @@ public class UsersController {
     public ResponseEntity<UsersDto> updateUser(@PathVariable("id") Integer userId, @RequestBody UsersDto usersDto) {
         UsersDto updatedUser = usersService.updateUser(userId, usersDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(usersService.deleteUserById(id), HttpStatus.OK);
     }
 
 
